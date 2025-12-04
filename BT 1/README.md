@@ -44,7 +44,7 @@
 
 ---
 
-# 3. Giải thích các hàm chính trong code
+## 3. Giải thích các hàm chính trong code
 
 ### Hàm `main()`
 
