@@ -30,12 +30,7 @@ class ProfileScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: () {},
         ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () {},
-          ),
-        ],
+        actions: [IconButton(icon: const Icon(Icons.edit), onPressed: () {})],
       ),
       body: Center(
         child: Column(
@@ -43,25 +38,18 @@ class ProfileScreen extends StatelessWidget {
           children: [
             const CircleAvatar(
               radius: 60,
-              backgroundImage: NetworkImage(
-                "https://i.pravatar.cc/300",
-              ),
+              backgroundImage: AssetImage("assets/img/300.jpg"),
             ),
+
             const SizedBox(height: 20),
             const Text(
               "Johan Smith",
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
             const Text(
               "California, USA",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
+              style: TextStyle(fontSize: 16, color: Colors.grey),
             ),
           ],
         ),
