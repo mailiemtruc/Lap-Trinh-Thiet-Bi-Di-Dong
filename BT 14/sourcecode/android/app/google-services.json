@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "313804114303",
+    "project_id": "uth-smarttasks-truc-52b6d",
+    "storage_bucket": "uth-smarttasks-truc-52b6d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:313804114303:android:bd7c42d8008582f7a8724a",
+        "android_client_info": {
+          "package_name": "com.example.sourcecode"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "313804114303-537o80fa5kmqjsqafu4odbiepn9gco7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sourcecode",
+            "certificate_hash": "0633e557ca38c4e75be9f7183d87ea2ff14686ff"
+          }
+        },
+        {
+          "client_id": "313804114303-httvgd0edho3k60srftdmo0u348s16i9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzUEuDOaT7Gy0lDLwNGf_1d9lSiBi-v8k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "313804114303-httvgd0edho3k60srftdmo0u348s16i9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "313804114303-3o3uhvuiv5kaqh5bakiefmar9ssm985n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sourcecode"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
