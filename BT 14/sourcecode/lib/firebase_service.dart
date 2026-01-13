@@ -21,11 +21,13 @@ class FirebaseService {
         idToken: googleAuth.idToken,
       );
 
+      //Authentication
       final UserCredential userCredential = await _auth.signInWithCredential(
         credential,
       );
       final User? user = userCredential.user;
 
+      //Cloud Firestore
       if (user != null) {
         await _db.collection('users').doc(user.uid).set({
           'uid': user.uid,
@@ -43,6 +45,7 @@ class FirebaseService {
     }
   }
 
+  //Remote Config
   Future<String> getWelcomeMessage() async {
     final remoteConfig = FirebaseRemoteConfig.instance;
 

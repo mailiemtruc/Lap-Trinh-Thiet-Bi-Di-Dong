@@ -1,16 +1,9 @@
-# sourcecode
+Authentication: Để bảo mật đăng nhập Google.
 
-A new Flutter project.
+Cloud Firestore: Để đồng bộ hồ sơ User lên đám mây tức thì.
 
-## Getting Started
+Remote Config: Điều khiển nội dung App từ xa (như thay đổi thông báo, câu chào) mà không cần update App.
 
-This project is a starting point for a Flutter application.
+Crashlytics: Để theo dõi chất lượng App, tự động báo lỗi nếu App bị Crash.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Analytics: Để thống kê hành vi người dùng.
