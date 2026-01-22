@@ -11,7 +11,7 @@ const String mockJsonData = '''
     "chef": { "name": "Phạm Tuấn Hải", "experience_years": 36 }
   },
   {
-    "id": "2",
+    "id": -1,
     "name": "Súp Cua",
     "image_url": "assets/images/food3.png",
     "price": 4.30,

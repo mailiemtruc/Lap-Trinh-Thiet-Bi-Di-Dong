@@ -17,7 +17,7 @@ Map<String, dynamic> _$ChefToJson(Chef instance) => <String, dynamic>{
 };
 
 FoodItem _$FoodItemFromJson(Map<String, dynamic> json) => FoodItem(
-  id: json['id'] as String,
+  id: forceString(json['id']),
   name: json['name'] as String,
   imageUrl: json['image_url'] as String,
   price: (json['price'] as num).toDouble(),

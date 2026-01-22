@@ -2,10 +2,15 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'food_model.g.dart';
 
+String forceString(dynamic value) {
+  if (value == null) return "";
+  return value.toString();
+}
+
 @JsonSerializable()
 class Chef {
   final String name;
-  @JsonKey(name: 'experience_years') // Demo đổi tên key
+  @JsonKey(name: 'experience_years')
   final int experience;
 
   Chef({required this.name, required this.experience});
@@ -14,9 +19,11 @@ class Chef {
   Map<String, dynamic> toJson() => _$ChefToJson(this);
 }
 
-@JsonSerializable(explicitToJson: true) // Demo nested object
+@JsonSerializable(explicitToJson: true)
 class FoodItem {
+  @JsonKey(fromJson: forceString)
   final String id;
+
   final String name;
   @JsonKey(name: 'image_url')
   final String imageUrl;

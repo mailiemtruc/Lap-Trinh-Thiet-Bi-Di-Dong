@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shimmer/shimmer.dart';
 import 'mock_data.dart';
 import 'food_model.dart';
 
@@ -39,6 +40,7 @@ class CinematicFoodPage extends StatefulWidget {
 
 class _CinematicFoodPageState extends State<CinematicFoodPage> {
   List<FoodItem> foods = [];
+  bool isLoading = true; // 1. Thêm trạng thái loading
 
   @override
   void initState() {
@@ -46,12 +48,20 @@ class _CinematicFoodPageState extends State<CinematicFoodPage> {
     _loadData();
   }
 
-  void _loadData() {
+  // 2. Chuyển thành async để giả lập delay mạng
+  Future<void> _loadData() async {
+    // Giả lập delay 3 giây để nhìn thấy Skeleton
+    await Future.delayed(const Duration(seconds: 3));
+
     final List<dynamic> jsonList = jsonDecode(mockJsonData);
     final data = jsonList.map((json) => FoodItem.fromJson(json)).toList();
-    setState(() {
-      foods = data;
-    });
+
+    if (mounted) {
+      setState(() {
+        foods = data;
+        isLoading = false; // Tắt loading sau khi có dữ liệu
+      });
+    }
   }
 
   @override
@@ -80,12 +90,109 @@ class _CinematicFoodPageState extends State<CinematicFoodPage> {
           ),
         ),
       ),
+      // 3. Logic hiển thị Skeleton hoặc Data thật
       body: ListView.builder(
         padding: const EdgeInsets.fromLTRB(16, 100, 16, 20),
-        itemCount: foods.length,
+        // Nếu đang loading, hiển thị 3 skeleton giả, ngược lại hiển thị list thật
+        itemCount: isLoading ? 3 : foods.length,
         itemBuilder: (context, index) {
+          if (isLoading) {
+            return const FoodCardSkeleton(); // Widget Skeleton mới
+          }
           return ImmersiveFoodCard(item: foods[index]);
         },
+      ),
+    );
+  }
+}
+
+// 4. Widget Skeleton mới
+class FoodCardSkeleton extends StatelessWidget {
+  const FoodCardSkeleton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Màu nền Shimmer cho Dark Mode
+    const baseColor = Color(0xFF2C2C2C);
+    const highlightColor = Color(0xFF4A4A4A);
+
+    return Container(
+      height: 300,
+      margin: const EdgeInsets.only(bottom: 24),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24),
+        color: Colors.black26, // Màu nền khung
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Shimmer.fromColors(
+          baseColor: baseColor,
+          highlightColor: highlightColor,
+          child: Stack(
+            children: [
+              // Giả lập ảnh nền full
+              Container(color: baseColor),
+
+              // Giả lập nội dung bên dưới
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Giả lập Badge/Tag
+                    Container(
+                      width: 80,
+                      height: 24,
+                      decoration: BoxDecoration(
+                        color: baseColor,
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+
+                    // Giả lập Tên món và Giá
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Tên món (Dài hơn)
+                        Container(
+                          width: 180,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: baseColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        // Giá tiền
+                        Container(
+                          width: 60,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: baseColor,
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 10),
+
+                    // Giả lập Chef Info
+                    Container(
+                      width: 120,
+                      height: 16,
+                      decoration: BoxDecoration(
+                        color: baseColor,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -122,7 +229,6 @@ class ImmersiveFoodCard extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              // 1. Ảnh nền
               Hero(
                 tag: item.id,
                 child: Image.asset(
@@ -132,8 +238,6 @@ class ImmersiveFoodCard extends StatelessWidget {
                       Container(color: Colors.grey[800]),
                 ),
               ),
-
-              // 2. Lớp phủ đen mờ dần từ dưới lên (Gradient Overlay)
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
@@ -144,15 +248,12 @@ class ImmersiveFoodCard extends StatelessWidget {
                   ),
                 ),
               ),
-
-              // 3. Thông tin món ăn
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Badge (Tag)
                     Row(
                       children: [
                         Container(
@@ -173,7 +274,6 @@ class ImmersiveFoodCard extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 10),
-                        // Hiển thị 1 tag đầu tiên
                         if (item.tags.isNotEmpty)
                           Container(
                             padding: const EdgeInsets.symmetric(
@@ -193,8 +293,6 @@ class ImmersiveFoodCard extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-
-                    // Tên món và Giá
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -219,10 +317,7 @@ class ImmersiveFoodCard extends StatelessWidget {
                         ),
                       ],
                     ),
-
                     const SizedBox(height: 6),
-
-                    // Chef Info (Chữ nhỏ màu xám)
                     Row(
                       children: [
                         const Icon(
@@ -260,14 +355,12 @@ class DetailPage extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Ảnh Full màn hình
           Positioned.fill(
             child: Hero(
               tag: item.id,
               child: Image.asset(item.imageUrl, fit: BoxFit.cover),
             ),
           ),
-          // Nút back
           Positioned(
             top: 50,
             left: 20,
